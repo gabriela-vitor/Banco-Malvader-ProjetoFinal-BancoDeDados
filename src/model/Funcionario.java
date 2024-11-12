@@ -7,14 +7,16 @@ public class Funcionario extends Usuario {
     private String cargo;
     private String senha;
 
-    // Métodos específicos
+    // métodos específicos como abrir e encerrar conta
+    // Lógica para abrir conta
     public void abrirConta(Conta conta) {
-        // Lógica para abrir conta
+       
     }
 
+    // Lógica para encerrar conta
     public void encerrarConta(Conta conta) {
-        // Lógica para encerrar conta
+        
     }
 
-    // Outros métodos conforme a especificação
+   
 }
