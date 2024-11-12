@@ -5,28 +5,33 @@ package model;
 public class Cliente extends Usuario {
     private String senha;
 
-    // Métodos específicos
+    // Métodos específicos como consultar, depositar e sacar
+    // Lógica para consultar saldo
     public double consultarSaldo() {
-        // Lógica para consultar saldo
+        
         return 0;
     }
 
+    // Lógica para depósito
     public void depositar(double valor) {
-        // Lógica para depósito
+        
     }
 
+    // Lógica para saque
     public boolean sacar(double valor) {
-        // Lógica para saque
+       
         return true;
     }
 
+     // Lógica para consultar extrato
     public String consultarExtrato() {
-        // Lógica para consultar extrato
+       
         return "";
     }
 
+    // Lógica para consultar limite
     public double consultarLimite() {
-        // Lógica para consultar limite
+        
         return 0;
     }
 }
