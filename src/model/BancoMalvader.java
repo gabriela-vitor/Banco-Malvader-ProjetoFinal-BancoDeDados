@@ -9,8 +9,9 @@ public class BancoMalvader {
         this.nome = nome;
     }
 
+    // inicia o sistema com o menu de login
     public void iniciarSistema() {
-        // Inicia o sistema com o menu de login
+        
     }
 
     public static void main(String[] args) {
