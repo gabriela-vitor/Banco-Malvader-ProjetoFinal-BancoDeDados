@@ -9,16 +9,19 @@ import model.Conta;
 public class BancoController {
     private Funcionario funcionarioLogado;
     private Cliente clienteLogado;
-
+    
+    // lógica para abrir conta aqui
     public void abrirConta(Conta conta) {
-        // Lógica para abrir conta
+       
     }
 
+    // lógica para encerrar conta
     public void encerrarConta(int numeroConta) {
-        // Lógica para encerrar conta
+        
     }
 
+    // lógica para consultar conta
     public void consultarConta(int numeroConta) {
-        // Lógica para consultar conta
+        
     }
 }
