@@ -13,7 +13,7 @@ public class LoginView extends JFrame {
 
     public LoginView() {
         setTitle("Banco Malvader - Login");
-        setSize(300, 180);  // Aumentei o tamanho para acomodar o novo botão
+        setSize(300, 180);  
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
@@ -38,7 +38,7 @@ public class LoginView extends JFrame {
         botaoFuncionario.setBounds(20, 90, 100, 25);
         botaoFuncionario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Implementar autenticação do funcionário
+                // implementar autenticação do funcionário
             }
         });
         add(botaoFuncionario);
@@ -47,17 +47,17 @@ public class LoginView extends JFrame {
         botaoCliente.setBounds(150, 90, 100, 25);
         botaoCliente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Implementar autenticação do cliente
+                // implementar autenticação do cliente
             }
         });
         add(botaoCliente);
 
-        // Botão Sair
+        // botão Sair
         botaoSair = new JButton("Sair");
-        botaoSair.setBounds(100, 130, 100, 25);  // Coloquei abaixo dos outros botões
+        botaoSair.setBounds(100, 130, 100, 25);  // botao sair abaixo dos outros botoes
         botaoSair.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);  // Encerra o programa
+                System.exit(0);  // encerra o programa
             }
         });
         add(botaoSair);
