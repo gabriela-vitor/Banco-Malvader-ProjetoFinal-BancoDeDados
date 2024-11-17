@@ -1,6 +1,6 @@
 //classe que herda de usuario e implementa funcionalidades especificas para usuario
 
-package model;
+/*package model;
 
 public class Funcionario extends Usuario {
     private String codigoFuncionario;
@@ -19,4 +19,4 @@ public class Funcionario extends Usuario {
     }
 
    
-}
+}*/

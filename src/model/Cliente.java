@@ -45,7 +45,7 @@ public class Cliente extends Usuario {
     public boolean sacar(double valor) {
        //verifica se o valor e positivo e se o saldo com limite permite o saque
         if (valor > 0 && valor <= (saldo + limite)) {
-            saldo -= valor;//valor do saldo
+            saldo -= valor;//valor do saldo atualizado
             extrato.add("Saque: -" + valor);//registra o saque no extrato
             System.out.println("Saque de " + valor + " realizado com sucesso.");//confirma o saque
             return true;
@@ -71,5 +71,4 @@ public class Cliente extends Usuario {
         
         return this.limite;//retorna o valor do limite
     }
-}
-
+} 

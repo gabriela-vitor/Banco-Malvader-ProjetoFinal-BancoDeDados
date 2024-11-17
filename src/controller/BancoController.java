@@ -2,12 +2,12 @@
 
 package controller;
 
-import model.Funcionario;
+//import model.Funcionario;
 import model.Cliente;
 import model.Conta;
 
 public class BancoController {
-    private Funcionario funcionarioLogado;
+    //private Funcionario funcionarioLogado;
     private Cliente clienteLogado;
     
     // lógica para abrir conta aqui
