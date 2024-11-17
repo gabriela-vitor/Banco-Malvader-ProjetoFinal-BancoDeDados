@@ -35,7 +35,7 @@ public class VerificarSenhaView extends JDialog {
 
         // Cria um painel de botões para confirmar ou cancelar a operação
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());  // Layout de fluxo (os botões ficam lado a lado)
+        buttonPanel.setLayout(new FlowLayout());  // os botões ficam lado a lado
 
         // Botão de confirmação
         JButton botaoConfirmar = new JButton("Confirmar");
@@ -72,7 +72,7 @@ public class VerificarSenhaView extends JDialog {
     // Método para autenticar a senha fornecida pelo cliente
     private boolean autenticarSenha(String senha) {
         // Verifica se a senha fornecida é igual à senha predefinida
-        return "cli123".equals(senha);  // Senha de exemplo (em um caso real, isso seria feito com um banco de dados)
+        return "cli123".equals(senha);  // Senha de exemplo 
     }
         private void realizarAcao() {
             switch (acao) {
@@ -80,10 +80,10 @@ public class VerificarSenhaView extends JDialog {
                     new SaldoView(clienteId);  // Chama a tela de saldo
                     break;
                 case "Saque":
-                    new SaqueView(clienteId);  // Chama a tela de saque (você precisaria criar essa tela)
+                    new SaqueView(clienteId);  // Chama a tela de saque 
                     break;
                 case "Consultar Limite":
-                    new LimiteView(clienteId);  // Chama a tela de limite (você precisaria criar essa tela)
+                    new LimiteView(clienteId);  // Chama a tela de limite 
                     break;
         }
     }
