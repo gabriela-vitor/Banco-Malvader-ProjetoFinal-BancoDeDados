@@ -2,10 +2,16 @@
 
 package model;
 
+import java.time.LocalDate;
+
 public class Funcionario extends Usuario {
     private String codigoFuncionario;
     private String cargo;
     private String senha;
+
+    public Funcionario(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco) {
+        super(id, nome, cpf, dataNascimento, telefone, endereco);
+    }
 
     // métodos específicos como abrir e encerrar conta
     // Lógica para abrir conta
