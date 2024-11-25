@@ -10,7 +10,13 @@ public class Cliente extends Usuario {
     private String senha;
     private double saldo;
     private double limite;
-    private List<String> extrato;
+    private List<String> extrato; 
+    private int id;
+    private String nome;
+    private String cpf;
+    private LocalDate dataNascimento;
+    private String telefone;
+    private Endereco endereco;
 
     public Cliente(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco, String senha, double limite) {
         super(id, nome, cpf, dataNascimento, telefone, endereco);//chama o construtor da classe Usuario
@@ -18,6 +24,12 @@ public class Cliente extends Usuario {
         this.saldo = 0.0;//inicializa o saldo com zero
         this.limite = limite;
         this.extrato = new ArrayList<>();//inicializa a lista de extrato
+        this.id = id; // inicializa o id
+        this.nome = nome; // inicializa o nome
+        this.cpf = cpf; // inicializa o CPF
+        this.dataNascimento = dataNascimento; // inicializa a data de nascimento
+        this.telefone = telefone; // inicializa o telefone
+        this.endereco = endereco; // inicializa o endereço
 
     }
 
@@ -70,5 +82,54 @@ public class Cliente extends Usuario {
     public double consultarLimite() {
         
         return this.limite;//retorna o valor do limite
+    }
+
+    // getters e setters para os atributos 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 } 

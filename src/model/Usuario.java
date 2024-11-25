@@ -72,4 +72,3 @@ public abstract class Usuario {
         this.endereco = endereco;
     }
 }
-
