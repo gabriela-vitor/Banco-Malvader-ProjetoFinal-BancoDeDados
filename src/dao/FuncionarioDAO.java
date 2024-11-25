@@ -1,11 +1,10 @@
 package dao;
 
+import util.DBUtil;
+
 import java.sql.*;
 
 public class FuncionarioDAO {
-    private static final String URL = "jdbc:mysql://localhost:3306/bancodedados"; // Nome do banco de dados
-    private static final String USER = "root"; // Usuário do MySQL
-    private static final String PASSWORD = ""; // Senha do MySQL
 
     // Método para autenticar o funcionário pelo código e senha
     public boolean autenticar(String codigoFuncionario, String senha) {
@@ -14,7 +13,7 @@ public class FuncionarioDAO {
                      "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
                      "WHERE f.codigo_funcionario = ? AND u.senha = ?";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, codigoFuncionario); // Define o código do funcionário
             ps.setString(2, senha); // Define a senha do funcionário
@@ -28,7 +27,7 @@ public class FuncionarioDAO {
     }
 
     // Método para cadastrar um novo funcionário
-    public boolean cadastrarFuncionario(String nome, String cpf, String dataNascimento, String telefone, 
+    public boolean cadastrarFuncionario(String nome, String cpf, String dataNascimento, String telefone,
                                         String senha, String codigoFuncionario, String cargo) {
         String usuarioSql = "INSERT INTO usuario (nome, cpf, data_nascimento, telefone, tipo_usuario, senha) " +
                             "VALUES (?, ?, ?, ?, 'FUNCIONARIO', ?)";
@@ -36,7 +35,7 @@ public class FuncionarioDAO {
         String funcionarioSql = "INSERT INTO funcionario (codigo_funcionario, cargo, id_usuario) " +
                                 "VALUES (?, ?, ?)";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = DBUtil.conectar()) {
             connection.setAutoCommit(false); // Inicia transação
 
             try (PreparedStatement usuarioPs = connection.prepareStatement(usuarioSql, Statement.RETURN_GENERATED_KEYS)) {
@@ -80,7 +79,7 @@ public class FuncionarioDAO {
                      "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
                      "WHERE f.id_funcionario = ?";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idFuncionario);
 
@@ -93,16 +92,8 @@ public class FuncionarioDAO {
                 String codigoFuncionario = rs.getString("codigo_funcionario");
                 String cargo = rs.getString("cargo");
 
-                // Corrigido: Usando string concatenada para formatar as informações
-                return String.format(
-                    "Nome: %s\n" +
-                    "CPF: %s\n" +
-                    "Data de Nascimento: %s\n" +
-                    "Telefone: %s\n" +
-                    "Código Funcionário: %s\n" +
-                    "Cargo: %s",
-                    nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo
-                );
+                return String.format("Nome: %s\nCPF: %s\nData de Nascimento: %s\nTelefone: %s\nCódigo Funcionário: %s\nCargo: %s",
+        nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,7 +105,7 @@ public class FuncionarioDAO {
     public boolean atualizarCargo(int idFuncionario, String novoCargo) {
         String sql = "UPDATE funcionario SET cargo = ? WHERE id_funcionario = ?";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, novoCargo);
             ps.setInt(2, idFuncionario);
@@ -131,7 +122,7 @@ public class FuncionarioDAO {
     public boolean excluirFuncionario(int idFuncionario) {
         String sql = "DELETE FROM funcionario WHERE id_funcionario = ?";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idFuncionario);
 
