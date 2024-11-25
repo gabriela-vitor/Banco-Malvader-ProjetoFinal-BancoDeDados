@@ -2,7 +2,7 @@ package view;
 
 import controller.ClienteController; // Importa a classe responsável por controlar as operações dos clientes
 import javax.swing.*; // Importa componentes para criação de interface gráfica
-import java.awt.BorderLayout; // Importa o layout para organização da interface
+import java.awt.*; // Importa layouts e outras funcionalidades de interface gráfica
 
 // Classe que cria a interface para exibir o extrato do cliente
 public class ExtratoView extends JFrame {
@@ -26,8 +26,22 @@ public class ExtratoView extends JFrame {
         // Adiciona a área de texto dentro de um painel com barra de rolagem
         add(new JScrollPane(extratoArea), BorderLayout.CENTER); 
         
+        // Criar o botão "Voltar"
+        JButton voltarButton = new JButton("Voltar");
+        voltarButton.addActionListener(e -> {
+            dispose(); // Fecha a tela atual
+            new MenuClienteView(); // Abre a tela do menu do cliente
+        });
+
+        // Adiciona o botão "Voltar" no layout
+        JPanel panel = new JPanel();
+        panel.add(voltarButton); // Adiciona o botão ao painel
+        add(panel, BorderLayout.SOUTH); // Coloca o painel na parte inferior da janela
+
+        // Configura a posição da janela
+        setLocationRelativeTo(null); // Para exibir a janela no centro da tela
+
         // Torna a janela visível
         setVisible(true);
     }
 }
-

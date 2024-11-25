@@ -37,3 +37,19 @@ public class ContaPoupanca extends Conta{
         this.taxaRendimento = taxaRendimento;
     }
 }
+
+//APENAS EXEMPLOS PARA TESTES
+
+/*package model; 
+public class ContaPoupanca { 
+    private double saldo; 
+    
+    public ContaPoupanca() { 
+        this.saldo = 500.00;} 
+        
+        public double getSaldo() { 
+            return saldo; } 
+            
+    }*/
+
+

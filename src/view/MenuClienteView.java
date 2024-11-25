@@ -9,7 +9,12 @@ import java.awt.event.ActionListener;
 public class MenuClienteView extends JFrame {
     private int clienteId; // ID do cliente para identificar o usuário atual
 
-    // Construtor que inicializa o menu do cliente
+    // Construtor padrão (sem parâmetros)
+    public MenuClienteView() {
+        this(0); // Define um ID padrão (0) se não for fornecido
+    }
+
+    // Construtor que inicializa o menu do cliente com o ID do cliente
     public MenuClienteView(int clienteId) {
         this.clienteId = clienteId; // Armazena o ID do cliente
 
@@ -93,11 +98,12 @@ public class MenuClienteView extends JFrame {
         // Adiciona o painel de botões na parte central da janela
         add(buttonPanel, BorderLayout.CENTER);
 
+        setLocationRelativeTo(null); // Centraliza a janela
         setVisible(true); // Torna a janela visível
     }
 
-    // Método principal para testar a classe com um cliente de ID 1
+    // Método principal para testar a classe com um cliente fictício
     public static void main(String[] args) {
         new MenuClienteView(1); // Abre o menu para um cliente fictício
     }
-}
+}  

@@ -19,12 +19,13 @@ public class DepositoView extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fecha apenas esta janela ao clicar em "X"
         
         // Configuração do layout da janela
-        setLayout(new FlowLayout());
+        setLayout(new GridLayout(3, 2, 10, 10)); // Usando GridLayout para organizar os componentes em 3 linhas e 2 colunas
 
         // Criação dos componentes da interface
         JLabel valorLabel = new JLabel("Valor para depositar:"); // Rótulo para informar o que fazer
         JTextField valorField = new JTextField(10); // Campo de texto para o usuário inserir o valor
         JButton depositarButton = new JButton("Depositar"); // Botão para realizar o depósito
+        JButton voltarButton = new JButton("Voltar"); // Botão para voltar à outra página
         
         // Define a ação a ser executada ao clicar no botão de depósito
         depositarButton.addActionListener(new ActionListener() {
@@ -44,10 +45,19 @@ public class DepositoView extends JFrame {
             }
         });
 
+        voltarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Fecha a janela atual
+                new MenuClienteView(); // Abre a janela do Menu Cliente
+            }
+        });
+        
         // Adiciona os componentes à janela
         add(valorLabel); // Adiciona o rótulo
         add(valorField); // Adiciona o campo de texto
-        add(depositarButton); // Adiciona o botão
+        add(depositarButton); // Adiciona o botão de depósito
+        add(voltarButton); // Adiciona o botão de voltar
         
         // Centraliza a janela na tela
         setLocationRelativeTo(null);

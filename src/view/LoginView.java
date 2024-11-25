@@ -1,119 +1,129 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// Classe que representa a interface de login para o sistema Banco Malvader
+// Classe principal para a interface gráfica de menu cliente
 public class LoginView extends JFrame {
-    private JTextField campoUsuario; // Campo para entrada do nome de usuário
-    private JPasswordField campoSenha; // Campo para entrada da senha
-    private JButton botaoFuncionario, botaoCliente, botaoSair; // Botões para login e sair
 
-    // Credenciais fixas para validação (exemplo)
-    private final String usuarioFuncionario = ""; // Usuário de exemplo para funcionário
     private final String senhaFuncionario = ""; // Senha de exemplo para funcionário
     private final String usuarioCliente = ""; // Usuário de exemplo para cliente
     private final String senhaCliente = ""; // Senha de exemplo para cliente
 
-    // Construtor da classe LoginView
+    // Construtor da tela do MenuClienteView
     public LoginView() {
-        setTitle("Banco Malvader - Login"); // Define o título da janela
-        setSize(300, 180); // Define o tamanho da janela
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define a ação ao fechar a janela
-        setLocationRelativeTo(null); // Centraliza a janela na tela
-        setLayout(null); // Desativa o layout automático para uso de posicionamento manual
+        setTitle("Menu Cliente"); // Define o título da janela
+        setSize(400, 250); // Define o tamanho da janela
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao fechar a janela
+        setLocationRelativeTo(null); // Centraliza a janela
 
-        // Rótulo (label) para o campo de usuário
-        JLabel labelUsuario = new JLabel("Usuário:");
-        labelUsuario.setBounds(20, 20, 80, 25); // Define a posição e o tamanho do rótulo
-        add(labelUsuario);
+        // Layout de grade para organizar os botões e campos
+        setLayout(new GridLayout(3, 1, 10, 10)); // 3 linhas e 1 coluna
 
-        // Campo de entrada para o usuário
-        campoUsuario = new JTextField();
-        campoUsuario.setBounds(100, 20, 150, 25);
-        add(campoUsuario);
+        // Criação dos botões para escolher o tipo de acesso
+        JButton clienteButton = new JButton("Acessar como Cliente");
+        JButton funcionarioButton = new JButton("Acessar como Funcionário");
+        JButton sairButton = new JButton("Sair");
 
-        // Rótulo (label) para o campo de senha
-        JLabel labelSenha = new JLabel("Senha:");
-        labelSenha.setBounds(20, 50, 80, 25);
-        add(labelSenha);
-
-        // Campo de entrada para a senha
-        campoSenha = new JPasswordField();
-        campoSenha.setBounds(100, 50, 150, 25);
-        add(campoSenha);
-
-        // Botão para login como funcionário
-        botaoFuncionario = new JButton("Funcionário");
-        botaoFuncionario.setBounds(20, 90, 100, 25);
-        botaoFuncionario.addActionListener(new ActionListener() {
+        // Ação do botão "Acessar como Cliente"
+        clienteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                autenticarFuncionario(); // Chama a função de autenticação de funcionário
+                mostrarCamposLogin("Cliente"); // Exibe campos de login para Cliente
+                dispose(); // Fecha a janela principal
             }
         });
-        add(botaoFuncionario);
 
-        // Botão para login como cliente
-        botaoCliente = new JButton("Cliente");
-        botaoCliente.setBounds(150, 90, 100, 25);
-        botaoCliente.addActionListener(new ActionListener() {
+        // Ação do botão "Acessar como Funcionário"
+        funcionarioButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                autenticarCliente(); // Chama a função de autenticação de cliente
+                mostrarCamposLogin("Funcionário"); // Exibe campos de login para Funcionário
+                dispose(); // Fecha a janela principal
             }
         });
-        add(botaoCliente);
 
-        // Botão para sair do sistema
-        botaoSair = new JButton("Sair");
-        botaoSair.setBounds(100, 130, 100, 25);
-        botaoSair.addActionListener(new ActionListener() {
+        // Ação do botão "Sair"
+        sairButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0); // Encerra o programa
+                System.exit(0); // Finaliza a aplicação
             }
         });
-        add(botaoSair);
+
+        // Adiciona os botões à janela
+        add(clienteButton);
+        add(funcionarioButton);
+        add(sairButton);
+
+        setVisible(true); // Torna a janela visível
     }
 
-    // Função para autenticar um funcionário
-    private void autenticarFuncionario() {
-        String usuario = campoUsuario.getText(); // Obtém o texto do campo de usuário
-        String senha = new String(campoSenha.getPassword()); // Obtém o texto do campo de senha
+    // Método para mostrar os campos de login após escolher o tipo de acesso
+    private void mostrarCamposLogin(String tipoAcesso) {
+        // Cria uma nova janela para o login
+        JFrame loginFrame = new JFrame("Login - " + tipoAcesso);
+        loginFrame.setSize(400, 200);
+        loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fecha apenas esta janela
+        loginFrame.setLocationRelativeTo(null); // Centraliza a janela
 
-        if (usuario.equals(usuarioFuncionario) && senha.equals(senhaFuncionario)) {
-            JOptionPane.showMessageDialog(this, "Login de Funcionário bem-sucedido!");
-            abrirTelaFuncionario(); // Abre a tela de funcionário
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuário ou senha de funcionário incorretos!", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        // Layout de grade para organizar os campos
+        loginFrame.setLayout(new GridLayout(4, 2, 10, 10));
+
+        // Campos de entrada para usuário e senha
+        JLabel usuarioLabel = new JLabel("Usuário:");
+        JTextField usuarioField = new JTextField();
+        JLabel senhaLabel = new JLabel("Senha:");
+        JPasswordField senhaField = new JPasswordField();
+
+        // Botão para realizar o login
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String usuario = usuarioField.getText();
+                char[] senha = senhaField.getPassword();
+
+                // Verificação simples (exemplo, você pode melhorar conforme necessário)
+                if (usuario.isEmpty() || senha.length == 0) {
+                    JOptionPane.showMessageDialog(loginFrame, "Por favor, preencha todos os campos.");
+                } else {
+                    JOptionPane.showMessageDialog(loginFrame, "Login realizado com sucesso!");
+                    // A lógica de autenticação e redirecionamento para o menu pode ser inserida aqui
+                    loginFrame.dispose(); // Fecha a janela de login
+                    if (tipoAcesso.equals("Cliente")) {
+                        new MenuClienteView(); // Abre o menu do cliente
+                    }
+                    // Adicione a lógica para "Funcionário" se necessário
+                }
+            }
+        });
+
+        // Botão para voltar à tela principal
+        JButton voltarButton = new JButton("Voltar");
+        voltarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginFrame.dispose(); // Fecha a janela de login
+                new LoginView(); // Volta para a tela principal de seleção de acesso
+            }
+        });
+
+        // Adiciona os componentes à janela de login
+        loginFrame.add(usuarioLabel);
+        loginFrame.add(usuarioField);
+        loginFrame.add(senhaLabel);
+        loginFrame.add(senhaField);
+        loginFrame.add(voltarButton); // Adiciona o botão de voltar
+        loginFrame.add(loginButton); // Adiciona o botão de login
+
+        loginFrame.setVisible(true); // Torna a janela de login visível
     }
 
-    // Função para autenticar um cliente
-    private void autenticarCliente() {
-        String usuario = campoUsuario.getText(); // Obtém o texto do campo de usuário
-        String senha = new String(campoSenha.getPassword()); // Obtém o texto do campo de senha
-
-        if (usuario.equals(usuarioCliente) && senha.equals(senhaCliente)) {
-            JOptionPane.showMessageDialog(this, "Login de Cliente bem-sucedido!");
-            abrirTelaCliente(); // Abre a tela de cliente
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuário ou senha de cliente incorretos!", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void abrirTelaFuncionario() {
-        new MenuFuncionarioView().setVisible(true); // Abre a tela MenuFuncionarioView
-        this.dispose(); // Fecha a tela de login
-    }
-
-    // Função para abrir a tela do cliente 
-    private void abrirTelaCliente() {
-        new MenuClienteView(1); // Simula a abertura da tela do cliente com ID 1
-        this.dispose(); // Fecha a tela de login
-    }
-
-    // Função principal para iniciar a aplicação
+    // Método principal para iniciar a aplicação
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginView().setVisible(true)); // Exibe a interface gráfica
+        new LoginView(); // Inicia o menu cliente
     }
 }

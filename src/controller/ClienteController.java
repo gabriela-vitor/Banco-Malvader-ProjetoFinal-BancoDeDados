@@ -1,10 +1,14 @@
-//responsavel por controlar as acoes do cliente
+// ClienteController.java
 package controller;
 
 import dao.ClienteDAO;
+import model.ContaCorrente;
+import model.ContaPoupanca;
 
 public class ClienteController {
     private ClienteDAO clienteDAO; // Instância do DAO para acessar dados do banco
+    private ContaCorrente contaCorrente;
+    private ContaPoupanca contaPoupanca;
 
     // Construtor que inicializa o ClienteDAO
     public ClienteController() {
@@ -45,5 +49,19 @@ public class ClienteController {
     public boolean autenticar(String usuario, String senha) {
         // Chama o método no DAO que verifica se o usuário e senha estão corretos no banco
         return clienteDAO.autenticar(usuario, senha);
+    }
+
+    // Método para consultar o saldo da conta corrente
+    public double consultarSaldoContaCorrente(int clienteId) {
+        // Inicializa a conta corrente (isso pode ser feito de outra forma dependendo da lógica da aplicação)
+        contaCorrente = new ContaCorrente(1000.00); // Exemplo de inicialização com saldo
+        return contaCorrente.getSaldo();
+    }
+
+    // Método para consultar o saldo da conta poupança
+    public double consultarSaldoContaPoupanca(int clienteId) {
+        // Inicializa a conta poupança (isso pode ser feito de outra forma dependendo da lógica da aplicação)
+        contaPoupanca = new ContaPoupanca(); // Exemplo de inicialização com saldo
+        return contaPoupanca.getSaldo();
     }
 }

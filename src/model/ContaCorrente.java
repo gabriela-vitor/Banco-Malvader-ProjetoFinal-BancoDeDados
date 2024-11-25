@@ -51,3 +51,26 @@ public class ContaCorrente extends Conta {
         this.dataVencimento = dataVencimento;
     }
 }
+
+//APENAS EXEMPLO PARA TESTES
+
+/*package model;
+
+public class ContaCorrente {
+    private double saldo;
+
+    
+    public ContaCorrente() {
+        this.saldo = 1000.00;
+    }
+
+   
+    public ContaCorrente(double saldoInicial) {
+        this.saldo = saldoInicial;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+}*/
+

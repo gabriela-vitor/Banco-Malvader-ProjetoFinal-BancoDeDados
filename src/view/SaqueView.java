@@ -51,10 +51,21 @@ public class SaqueView extends JFrame {
             }
         });
 
+        // Criar o botão "Voltar"
+        JButton voltarButton = new JButton("Voltar");
+        voltarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Fecha a tela de saque
+                new MenuClienteView(); // Abre a tela do menu do cliente
+            }
+        });
+
         // Adiciona os componentes à tela
         add(valorLabel); // Rótulo
         add(valorField); // Campo de texto
         add(sacarButton); // Botão de saque
+        add(voltarButton); // Botão de voltar
 
         // Configura a posição da janela no centro da tela
         setLocationRelativeTo(null);

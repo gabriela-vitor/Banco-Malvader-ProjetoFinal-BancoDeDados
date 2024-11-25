@@ -3,6 +3,8 @@ package view;
 import controller.ClienteController; // Importa o controlador que gerencia as operações dos clientes
 import javax.swing.*; // Importa as bibliotecas para criar interfaces gráficas
 import java.awt.*; // Importa as bibliotecas para trabalhar com layouts
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // Classe que exibe o limite de crédito do cliente
 public class LimiteView extends JFrame {
@@ -27,6 +29,19 @@ public class LimiteView extends JFrame {
         JLabel limiteLabel = new JLabel("Seu limite: R$ " + String.format("%.2f", limite)); 
         add(limiteLabel); // Adiciona o rótulo à janela
         
+        // Criar o botão "Voltar"
+        JButton voltarButton = new JButton("Voltar");
+        voltarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Fecha a tela de limite de crédito
+                new MenuClienteView(); // Abre a tela do menu do cliente
+            }
+        });
+
+        // Adiciona o botão de voltar à janela
+        add(voltarButton);
+        
         // Configura a posição da janela no centro da tela
         setLocationRelativeTo(null);
 
@@ -34,5 +49,3 @@ public class LimiteView extends JFrame {
         setVisible(true);
     }
 }
-
-
