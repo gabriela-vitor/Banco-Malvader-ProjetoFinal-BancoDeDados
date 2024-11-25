@@ -11,10 +11,10 @@ public class LoginView extends JFrame {
     private JButton botaoFuncionario, botaoCliente, botaoSair; // Botões para login e sair
 
     // Credenciais fixas para validação (exemplo)
-    private final String usuarioFuncionario = "funcionario"; // Usuário de exemplo para funcionário
-    private final String senhaFuncionario = "func123"; // Senha de exemplo para funcionário
-    private final String usuarioCliente = "cliente"; // Usuário de exemplo para cliente
-    private final String senhaCliente = "cli123"; // Senha de exemplo para cliente
+    private final String usuarioFuncionario = ""; // Usuário de exemplo para funcionário
+    private final String senhaFuncionario = ""; // Senha de exemplo para funcionário
+    private final String usuarioCliente = ""; // Usuário de exemplo para cliente
+    private final String senhaCliente = ""; // Senha de exemplo para cliente
 
     // Construtor da classe LoginView
     public LoginView() {
