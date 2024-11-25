@@ -4,7 +4,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class Usuario {
+public abstract class Usuario {
     // classe Usuario
     private int id;
     private String nome;
