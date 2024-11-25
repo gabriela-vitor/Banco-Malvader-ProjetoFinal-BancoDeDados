@@ -3,6 +3,7 @@ package controller;
 import dao.FuncionarioDAO;
 import model.Funcionario;
 import model.Conta;
+import sql_banco_malvader.banco_malvader.sql;
 
 public class FuncionarioController {
 
@@ -15,7 +16,7 @@ public class FuncionarioController {
 
    
     public boolean autenticarFuncionario(String usuario, String senha) {
-        Funcionario funcionario = funcionarioDAO.buscarFuncionarioPorUsuario(usuario);
+        Funcionario funcionario = funcionarioDAO.buscarFuncionarioPorId(idFuncionario);
         if (funcionario != null && funcionario.getSenha().equals(senha)) {
             return true;
         }

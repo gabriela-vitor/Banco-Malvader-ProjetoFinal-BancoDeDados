@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 //classe que herda de usuario e implementa funcionalidades especificas para usuario
 
 package model;

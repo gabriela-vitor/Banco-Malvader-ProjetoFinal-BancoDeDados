@@ -18,8 +18,12 @@ CREATE TABLE funcionario (
 
 CREATE TABLE cliente (
                          id_cliente INT AUTO_INCREMENT PRIMARY KEY,
-                         id_usuario INT NOT NULL,
-                         FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+                         nome VARCHAR(100) NOT NULL,
+                         cpf VARCHAR(11) NOT NULL UNIQUE,
+                         data_nascimento DATE NOT NULL,
+                         telefone VARCHAR(15),
+                         tipo_usuario ENUM('FUNCIONARIO', 'CLIENTE') NOT NULL,
+                         senha VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE endereco (
