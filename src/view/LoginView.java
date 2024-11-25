@@ -101,9 +101,8 @@ public class LoginView extends JFrame {
         }
     }
 
-    // Função para abrir a tela do funcionário
     private void abrirTelaFuncionario() {
-        JOptionPane.showMessageDialog(this, "Abrindo a tela do Funcionário...");
+        new MenuFuncionarioView().setVisible(true); // Abre a tela MenuFuncionarioView
         this.dispose(); // Fecha a tela de login
     }
 
