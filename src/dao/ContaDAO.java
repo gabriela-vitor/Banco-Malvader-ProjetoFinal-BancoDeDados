@@ -3,7 +3,7 @@ package dao;
 import model.Conta;
 import model.ContaCorrente;
 import model.ContaPoupanca;
-import util.DBUtil;
+import sql_banco__malvader.DBUtil;
 
 import java.sql.*;
 
