@@ -1,19 +1,16 @@
 package model;
 
-import java.util.function.DoubleBinaryOperator;
-
 import java.time.LocalDate;
 
 public class ContaCorrente extends Conta {
     private double limite;
     private LocalDate dataVencimento;
 
-    public ContaCorrente(String numeroConta, double saldoInicial, String agencia, Cliente cliente , double limite, LocalDate dataVencimento) {
+    public ContaCorrente(String numeroConta, double saldoInicial, String agencia, Cliente cliente, double limite, LocalDate dataVencimento) {
         super(numeroConta, saldoInicial, agencia, cliente);
         this.limite = limite;
         this.dataVencimento = dataVencimento;
     }
-
 
     public double consultarLimite() {
         return limite;
@@ -51,26 +48,3 @@ public class ContaCorrente extends Conta {
         this.dataVencimento = dataVencimento;
     }
 }
-
-//APENAS EXEMPLO PARA TESTES
-
-/*package model;
-
-public class ContaCorrente {
-    private double saldo;
-
-    
-    public ContaCorrente() {
-        this.saldo = 1000.00;
-    }
-
-   
-    public ContaCorrente(double saldoInicial) {
-        this.saldo = saldoInicial;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-}*/
-

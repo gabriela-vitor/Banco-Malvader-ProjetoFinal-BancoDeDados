@@ -1,4 +1,3 @@
-// ClienteController.java
 package controller;
 
 import dao.ClienteDAO;
@@ -22,15 +21,15 @@ public class ClienteController {
     }
 
     // Método para realizar um depósito na conta de um cliente
-    public void depositar(int clienteId, double valor) {
+    public void depositar(int clienteId, double valor, String tipoConta) {
         // Chama o método no DAO para incrementar o saldo no banco de dados
-        clienteDAO.depositar(clienteId, valor);
+        clienteDAO.depositar(clienteId, valor, tipoConta);
     }
 
     // Método para realizar um saque na conta de um cliente
-    public boolean sacar(int clienteId, double valor) {
+    public boolean sacar(int clienteId, double valor, String tipoConta) {
         // Chama o método no DAO para decrementar o saldo, se houver saldo suficiente
-        return clienteDAO.sacar(clienteId, valor);
+        return clienteDAO.sacar(clienteId, valor, tipoConta);
     }
 
     // Método para consultar o extrato de um cliente
@@ -53,15 +52,13 @@ public class ClienteController {
 
     // Método para consultar o saldo da conta corrente
     public double consultarSaldoContaCorrente(int clienteId) {
-        // Inicializa a conta corrente (isso pode ser feito de outra forma dependendo da lógica da aplicação)
-        contaCorrente = new ContaCorrente(1000.00); // Exemplo de inicialização com saldo
-        return contaCorrente.getSaldo();
+        // Consulta o saldo da conta corrente diretamente no banco
+        return clienteDAO.consultarSaldoContaCorrente(clienteId, "corrente");
     }
 
     // Método para consultar o saldo da conta poupança
     public double consultarSaldoContaPoupanca(int clienteId) {
-        // Inicializa a conta poupança (isso pode ser feito de outra forma dependendo da lógica da aplicação)
-        contaPoupanca = new ContaPoupanca(); // Exemplo de inicialização com saldo
-        return contaPoupanca.getSaldo();
+        // Consulta o saldo da conta poupança diretamente no banco
+        return clienteDAO.consultarSaldoContaPoupanca(clienteId, "poupanca");
     }
 }

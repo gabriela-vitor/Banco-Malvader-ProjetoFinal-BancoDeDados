@@ -46,8 +46,8 @@ public class ClienteDAO {
     }
 
     // Método para depositar um valor na conta do cliente
-    public void depositar(int clienteId, double valor) {
-        String sql = "UPDATE clientes SET saldo = saldo + ? WHERE id = ?";
+    public void depositar(int clienteId, double valor, String tipoConta) {
+        String sql = "UPDATE contas SET saldo = saldo + ? WHERE cliente_id = ? AND tipo_conta = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -56,14 +56,15 @@ public class ClienteDAO {
                 return;
             }
 
-            ps.setDouble(1, valor);  // Define o valor a ser depositado
-            ps.setInt(2, clienteId);  // Define o ID do cliente
+            ps.setDouble(1, valor);
+            ps.setInt(2, clienteId);
+            ps.setString(3, tipoConta);  // Especifica a conta (corrente ou poupança)
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
                 System.out.println("Depósito realizado com sucesso!");
             } else {
-                System.out.println("Cliente não encontrado ou erro ao realizar o depósito.");
+                System.out.println("Cliente ou tipo de conta não encontrado.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,14 +73,15 @@ public class ClienteDAO {
     }
 
     // Método para sacar um valor da conta do cliente
-    public boolean sacar(int clienteId, double valor) {
-        String sql = "UPDATE clientes SET saldo = saldo - ? WHERE id = ? AND saldo >= ?";
+    public boolean sacar(int clienteId, double valor, String tipoConta) {
+        String sql = "UPDATE contas SET saldo = saldo - ? WHERE cliente_id = ? AND tipo_conta = ? AND saldo >= ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setDouble(1, valor);
             ps.setInt(2, clienteId);
-            ps.setDouble(3, valor);
+            ps.setString(3, tipoConta);  // Especifica o tipo da conta
+            ps.setDouble(4, valor);
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;  // True se o saque foi realizado, false caso contrário
@@ -98,5 +100,30 @@ public class ClienteDAO {
     // Método para consultar o limite de crédito do cliente
     public double consultarLimite(int clienteId) {
         return 1000.0; // Exemplo estático para o limite de crédito
+    }
+
+    // Método para consultar o saldo da conta corrente de um cliente
+    public double consultarSaldoContaCorrente(int clienteId, String tipoConta) {
+        double saldo = 0.0;
+        String sql = "SELECT saldo FROM contas WHERE cliente_id = ? AND tipo_conta = ?";
+
+        try (Connection connection = DBUtil.conectar();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, clienteId);
+            ps.setString(2, tipoConta);  // Filtra por tipo de conta (corrente ou poupança)
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                saldo = rs.getDouble("saldo");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return saldo;
+    }
+
+    // Método para consultar o saldo da conta poupança de um cliente
+    public double consultarSaldoContaPoupanca(int clienteId, String tipoConta) {
+        return consultarSaldoContaCorrente(clienteId, tipoConta);  // Reutiliza o método genérico
     }
 }
