@@ -37,7 +37,7 @@ public class DepositoView extends JFrame {
                         JOptionPane.showMessageDialog(null, "Por favor, insira um valor válido!");
                     } else {
                         // Define o tipo da conta (exemplo: "corrente" ou "poupanca")
-                        String tipoConta = "corrente"; // Ou obtenha esse valor de outra fonte, se necessário
+                        String tipoConta = "corrente"; // Osu obtenha esse valor de outra fonte, se necessário
                         
                         // Chama o método de depósito no controlador com o tipo de conta
                         clienteController.depositar(clienteId, valor, tipoConta);
