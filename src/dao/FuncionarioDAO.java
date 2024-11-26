@@ -10,9 +10,9 @@ public class FuncionarioDAO {
     // Método para autenticar o funcionário pelo código e senha
     public boolean autenticar(String codigoFuncionario, String senha) {
         String sql = "SELECT f.id_funcionario " +
-                     "FROM funcionario f " +
-                     "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
-                     "WHERE f.codigo_funcionario = ? AND u.senha = ?";
+                "FROM funcionario f " +
+                "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
+                "WHERE f.codigo_funcionario = ? AND u.senha = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -31,10 +31,10 @@ public class FuncionarioDAO {
     public int cadastrarFuncionario(String nome, String cpf, String dataNascimento, String telefone,
                                     String senha, String cargo) {
         String usuarioSql = "INSERT INTO usuario (nome, cpf, data_nascimento, telefone, tipo_usuario, senha) " +
-                            "VALUES (?, ?, ?, ?, 'FUNCIONARIO', ?)";
+                "VALUES (?, ?, ?, ?, 'FUNCIONARIO', ?)";
 
         String funcionarioSql = "INSERT INTO funcionario (codigo_funcionario, cargo, id_usuario) " +
-                                "VALUES (?, ?, ?)";
+                "VALUES (?, ?, ?)";
 
         try (Connection connection = DBUtil.conectar()) {
             connection.setAutoCommit(false); // Inicia transação
@@ -81,9 +81,9 @@ public class FuncionarioDAO {
     // Método para consultar informações do funcionário pelo ID
     public String consultarFuncionario(int idFuncionario) {
         String sql = "SELECT u.nome, u.cpf, u.data_nascimento, u.telefone, f.codigo_funcionario, f.cargo " +
-                     "FROM funcionario f " +
-                     "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
-                     "WHERE f.id_funcionario = ?";
+                "FROM funcionario f " +
+                "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
+                "WHERE f.id_funcionario = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -99,7 +99,7 @@ public class FuncionarioDAO {
                 String cargo = rs.getString("cargo");
 
                 return String.format("Nome: %s\nCPF: %s\nData de Nascimento: %s\nTelefone: %s\nCódigo Funcionário: %s\nCargo: %s",
-                                     nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo);
+                        nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -110,9 +110,9 @@ public class FuncionarioDAO {
     // Método para consultar informações do funcionário pelo código
     public Funcionario consultarFuncionarioPorCodigo(String codigoFuncionario) {
         String sql = "SELECT u.nome, u.cpf, u.data_nascimento, u.telefone, f.codigo_funcionario, f.cargo " +
-                     "FROM funcionario f " +
-                     "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
-                     "WHERE f.codigo_funcionario = ?";
+                "FROM funcionario f " +
+                "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
+                "WHERE f.codigo_funcionario = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {

@@ -21,9 +21,9 @@ public class ClienteController {
     }
 
     // Método para realizar um depósito na conta de um cliente
-    public void depositar(int clienteId, double valor, String tipoConta) {
+    public void depositar(int clienteId, double valor, int numeroConta) {
         // Chama o método no DAO para incrementar o saldo no banco de dados
-        clienteDAO.depositar(clienteId, valor, tipoConta);
+        clienteDAO.depositar(clienteId, valor, numeroConta);
     }
 
     // Método para realizar um saque na conta de um cliente

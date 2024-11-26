@@ -38,7 +38,7 @@ public class MenuClienteView extends JFrame {
         saldoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SaldoView(clienteId); // Abre a tela de consulta de saldo
+                new SaldoView(0); // Abre a tela de consulta de saldo
             }
         });
 
@@ -47,7 +47,7 @@ public class MenuClienteView extends JFrame {
         depositoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new DepositoView(clienteId); // Abre a tela de depósito diretamente
+                new DepositoView(0); // Abre a tela de depósito diretamente
             }
         });
 
@@ -56,7 +56,7 @@ public class MenuClienteView extends JFrame {
         saqueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new VerificarSenhaView(MenuClienteView.this, clienteId, "Saque"); // Verifica a senha antes de realizar o saque
+                new VerificarSenhaView(MenuClienteView.this, 0, "Saque"); // Verifica a senha antes de realizar o saque
             }
         });
 
@@ -65,7 +65,7 @@ public class MenuClienteView extends JFrame {
         extratoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ExtratoView(clienteId); // Abre a tela de consulta de extrato
+                new ExtratoView(0); // Abre a tela de consulta de extrato
             }
         });
 
@@ -74,7 +74,7 @@ public class MenuClienteView extends JFrame {
         limiteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new VerificarSenhaView(MenuClienteView.this, clienteId, "Consultar Limite"); // Verifica a senha antes de consultar o limite
+                new VerificarSenhaView(MenuClienteView.this, 0, "Consultar Limite"); // Verifica a senha antes de consultar o limite
             }
         });
 

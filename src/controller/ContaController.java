@@ -3,11 +3,11 @@ package controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import util.DBUtil;
+import sql_banco__malvader.DBUtil;
 
 public class ContaController {
 
-    public String cadastrarConta(String numeroConta, String agencia, String tipoConta, int idCliente, 
+    public String cadastrarConta(String numeroConta, String agencia, String tipoConta, int idCliente,
                                  Double saldo, Double limite, Double taxaRendimento, String dataVencimento) {
         String mensagem = "";
 

@@ -27,7 +27,7 @@ public class SaldoView extends JFrame {
         contaCorrenteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double saldoCorrente = clienteController.consultarSaldoContaCorrente(clienteId);
+                double saldoCorrente = clienteController.consultarSaldoContaCorrente(0);
                 String saldoFormatado = String.format("R$ %.2f", saldoCorrente);
                 JOptionPane.showMessageDialog(SaldoView.this, "Saldo Conta Corrente: " + saldoFormatado);
             }
@@ -39,7 +39,7 @@ public class SaldoView extends JFrame {
         contaPoupancaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double saldoPoupanca = clienteController.consultarSaldoContaPoupanca(clienteId);
+                double saldoPoupanca = clienteController.consultarSaldoContaPoupanca(0);
                 String saldoFormatado = String.format("R$ %.2f", saldoPoupanca);
                 JOptionPane.showMessageDialog(SaldoView.this, "Saldo Conta Poupança: " + saldoFormatado);
             }

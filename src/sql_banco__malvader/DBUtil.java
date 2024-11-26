@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DBUtil {
 
     // URL, usuário e senha para conectar no banco de dados
-    private static final String URL = "jdbc:mysql://localhost:3306/";
+    private static final String URL = "jdbc:mysql://localhost:3306/bancomalvader";
     private static final String USER = "usuario";
     private static final String PASSWORD = "senha123";
 

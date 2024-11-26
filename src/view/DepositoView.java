@@ -34,8 +34,9 @@ public class DepositoView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String numeroConta = numeroContaField.getText(); // Obtém o número da conta
-                    if (numeroConta.isEmpty()) {
+                    String numeroContaStr = numeroContaField.getText();
+                    int numeroConta = Integer.parseInt(numeroContaStr);// Obtém o número da conta
+                    if (numeroContaStr.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Por favor, insira o número da conta!");
                         return;
                     }
@@ -45,7 +46,7 @@ public class DepositoView extends JFrame {
                         JOptionPane.showMessageDialog(null, "Por favor, insira um valor válido!");
                     } else {
                         // Chama o método de depósito no controlador
-                        clienteController.depositar(clienteId, numeroConta, valor);
+                        clienteController.depositar(clienteId , valor , numeroConta);
                         JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!"); // Mensagem de sucesso
                     }
                 } catch (NumberFormatException ex) { // Captura erro de conversão de texto para número
