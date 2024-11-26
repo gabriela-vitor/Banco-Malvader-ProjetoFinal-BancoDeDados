@@ -3,9 +3,6 @@ package view;
 import controller.FuncionarioController;
 import javax.swing.*;
 import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Random;
 
 public class MenuFuncionarioView extends JFrame {
 
@@ -33,10 +30,9 @@ public class MenuFuncionarioView extends JFrame {
         JButton btnExcluir = new JButton("Excluir");
 
         btnCadastrarFuncionario.addActionListener(e -> abrirFormularioCadastroFuncionario());
-
         btnCadastrarConta.addActionListener(e -> JOptionPane.showMessageDialog(this, "Cadastrar conta!"));
         btnConsultar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Consultar funcionário!"));
-        btnAtualizar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Atualizar cargo!"));
+        btnAtualizar.addActionListener(e -> abrirFormularioAtualizarCargo());
         btnExcluir.addActionListener(e -> JOptionPane.showMessageDialog(this, "Excluir funcionário!"));
 
         panelBotoes.add(btnCadastrarFuncionario);
@@ -122,7 +118,47 @@ public class MenuFuncionarioView extends JFrame {
     
         cadastroFrame.setVisible(true);
     }
-    
+
+    // Novo método para abrir o formulário de alteração de cargo
+    private void abrirFormularioAtualizarCargo() {
+        JFrame atualizarFrame = new JFrame("Alterar Cargo do Funcionário");
+        atualizarFrame.setSize(400, 300);
+        atualizarFrame.setLocationRelativeTo(this);
+        atualizarFrame.setLayout(new GridLayout(3, 2, 10, 10));
+
+        JTextField txtCodigoFuncionario = new JTextField();
+        JTextField txtNovoCargo = new JTextField();
+
+        atualizarFrame.add(new JLabel("Código do Funcionário:"));
+        atualizarFrame.add(txtCodigoFuncionario);
+        atualizarFrame.add(new JLabel("Novo Cargo:"));
+        atualizarFrame.add(txtNovoCargo);
+
+        JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JButton btnAlterar = new JButton("Alterar");
+        JButton btnCancelar = new JButton("Cancelar");
+
+        btnAlterar.addActionListener(e -> {
+            String codigoFuncionario = txtCodigoFuncionario.getText();
+            String novoCargo = txtNovoCargo.getText();
+            String mensagem = funcionarioController.alterarCargo(codigoFuncionario, novoCargo);
+            JOptionPane.showMessageDialog(atualizarFrame, mensagem);
+        });
+
+        btnCancelar.addActionListener(e -> {
+            int resposta = JOptionPane.showConfirmDialog(atualizarFrame, "Deseja realmente cancelar?", "Cancelar", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                atualizarFrame.dispose();
+            }
+        });
+
+        panelBotoes.add(btnAlterar);
+        panelBotoes.add(btnCancelar);
+        atualizarFrame.add(new JLabel());
+        atualizarFrame.add(panelBotoes);
+
+        atualizarFrame.setVisible(true);
+    }
 
     private JFormattedTextField criarCampoCpf() {
         try {

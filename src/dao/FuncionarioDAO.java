@@ -3,6 +3,8 @@ package dao;
 import sql_banco__malvader.DBUtil;
 import java.sql.*;
 
+import model.Funcionario;
+
 public class FuncionarioDAO {
 
     // Método para autenticar o funcionário pelo código e senha
@@ -105,6 +107,46 @@ public class FuncionarioDAO {
         return "Funcionário não encontrado.";
     }
 
+    
+    // Método para consultar informações do funcionário pelo código
+public Funcionario consultarFuncionarioPorCodigo(String codigoFuncionario) {
+    String sql = "SELECT u.nome, u.cpf, u.data_nascimento, u.telefone, f.codigo_funcionario, f.cargo " +
+                 "FROM funcionario f " +
+                 "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
+                 "WHERE f.codigo_funcionario = ?";
+
+    try (Connection connection = DBUtil.conectar();
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setString(1, codigoFuncionario); // Define o código do funcionário
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            // Recupera os dados do ResultSet
+            String nome = rs.getString("nome");
+            String cpf = rs.getString("cpf");
+            Date dataNascimento = rs.getDate("data_nascimento");
+            String telefone = rs.getString("telefone");
+            String codigoFuncionarioDb = rs.getString("codigo_funcionario");
+            String cargo = rs.getString("cargo");
+
+            // Cria o objeto Funcionario e atribui os dados
+            Funcionario funcionario = new Funcionario();
+            funcionario.setNome(nome);
+            funcionario.setCpf(cpf);
+            funcionario.setDataNascimento(dataNascimento);
+            funcionario.setTelefone(telefone);
+            funcionario.setCodigoFuncionario(codigoFuncionarioDb);
+            funcionario.setCargo(cargo);
+
+            return funcionario; // Retorna o objeto Funcionario
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null; // Retorna null caso não encontre o funcionário
+}
+
+
     // Método para atualizar o cargo de um funcionário
     public boolean atualizarCargo(int idFuncionario, String novoCargo) {
         String sql = "UPDATE funcionario SET cargo = ? WHERE id_funcionario = ?";
@@ -114,15 +156,15 @@ public class FuncionarioDAO {
             ps.setString(1, novoCargo);
             ps.setInt(2, idFuncionario);
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0; // Retorna true se o cargo foi atualizado
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0; // Retorna true se o cargo foi atualizado
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
-    // Método para excluir um funcionário pelo ID
+    // Método para excluir um funcionário
     public boolean excluirFuncionario(int idFuncionario) {
         String sql = "DELETE FROM funcionario WHERE id_funcionario = ?";
 
@@ -130,28 +172,28 @@ public class FuncionarioDAO {
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idFuncionario);
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0; // Retorna true se o funcionário foi excluído
+            int rowsDeleted = ps.executeUpdate();
+            return rowsDeleted > 0; // Retorna true se o funcionário foi excluído
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
-    // Método para atualizar o código do funcionário
-    public boolean atualizarCodigoFuncionario(int idFuncionario, String novoCodigoFuncionario) {
+    // Método para atualizar o código do funcionário no banco
+    public boolean atualizarCodigoFuncionario(int idFuncionario, String codigoFuncionario) {
         String sql = "UPDATE funcionario SET codigo_funcionario = ? WHERE id_funcionario = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, novoCodigoFuncionario);  // Define o novo código do funcionário
-            ps.setInt(2, idFuncionario);  // Define o ID do funcionário a ser atualizado
+            ps.setString(1, codigoFuncionario);
+            ps.setInt(2, idFuncionario);
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;  // Retorna true se o código foi atualizado
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0; // Retorna true se o código foi atualizado
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;  // Retorna false em caso de erro
         }
+        return false;
     }
 }
