@@ -2,6 +2,7 @@ package view;
 
 import controller.FuncionarioController;
 import controller.ContaController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
@@ -9,11 +10,11 @@ import java.text.ParseException;
 public class MenuFuncionarioView extends JFrame {
 
     private FuncionarioController funcionarioController;
-    private ContaController contaController; // Instância do controller de conta
+    private ContaController contaController;
 
     public MenuFuncionarioView() {
         funcionarioController = new FuncionarioController();
-        contaController = new ContaController(); // Inicialização do controlador de conta
+        contaController = new ContaController();
         initComponents();
     }
 
@@ -34,8 +35,8 @@ public class MenuFuncionarioView extends JFrame {
         JButton btnExcluir = new JButton("Excluir");
 
         btnCadastrarFuncionario.addActionListener(e -> abrirFormularioCadastroFuncionario());
-        btnCadastrarConta.addActionListener(e -> abrirFormularioCadastroConta()); // Novo método
-        btnConsultar.addActionListener(e -> mostrarMensagem("Consultar funcionário!"));
+        btnCadastrarConta.addActionListener(e -> abrirFormularioCadastroConta());
+        //btnConsultar.addActionListener(e -> abrirFormularioConsulta());
         btnAtualizar.addActionListener(e -> abrirFormularioAtualizarCargo());
         btnExcluir.addActionListener(e -> mostrarMensagem("Excluir funcionário!"));
 
@@ -220,11 +221,11 @@ public class MenuFuncionarioView extends JFrame {
         atualizarCargoFrame.setLocationRelativeTo(this);
         atualizarCargoFrame.setLayout(new GridLayout(3, 2, 10, 10));
 
-        JTextField txtCpf = new JTextField();
+        JTextField txtCodigo = new JTextField();
         JTextField txtCargo = new JTextField();
 
-        atualizarCargoFrame.add(new JLabel("CPF do Funcionário:"));
-        atualizarCargoFrame.add(txtCpf);
+        atualizarCargoFrame.add(new JLabel("Código do Funcionário:"));
+        atualizarCargoFrame.add(txtCodigo);
         atualizarCargoFrame.add(new JLabel("Novo Cargo:"));
         atualizarCargoFrame.add(txtCargo);
 
@@ -233,11 +234,9 @@ public class MenuFuncionarioView extends JFrame {
         JButton btnCancelar = new JButton("Cancelar");
 
         btnAtualizar.addActionListener(e -> {
-            String cpf = txtCpf.getText();
-            String novoCargo = txtCargo.getText();
-
-            // Chama o método correto no controlador
-            String mensagem = funcionarioController.atualizarCargoFuncionario(cpf, novoCargo);
+            String codigo = txtCodigo.getText();
+            String cargo = txtCargo.getText();
+            String mensagem = funcionarioController.atualizarCargoFuncionario(codigo, cargo);
             mostrarMensagem(mensagem);
         });
 
@@ -245,9 +244,11 @@ public class MenuFuncionarioView extends JFrame {
 
         panelBotoes.add(btnAtualizar);
         panelBotoes.add(btnCancelar);
-
+        atualizarCargoFrame.add(new JLabel());
         atualizarCargoFrame.add(panelBotoes);
 
         atualizarCargoFrame.setVisible(true);
     }
+    
+
 }
