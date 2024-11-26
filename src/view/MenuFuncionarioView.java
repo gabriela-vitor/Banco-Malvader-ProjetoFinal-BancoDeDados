@@ -3,6 +3,7 @@ package view;
 import controller.FuncionarioController;
 import javax.swing.*;
 import java.awt.*;
+import java.text.ParseException; // Importando a classe ParseException
 
 public class MenuFuncionarioView extends JFrame {
 
