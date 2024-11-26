@@ -130,8 +130,13 @@ public class MenuFuncionarioView extends JFrame {
         JFrame cadastroFrame = new JFrame("Cadastro de Conta");
         cadastroFrame.setSize(500, 400);
         cadastroFrame.setLocationRelativeTo(this);
-        cadastroFrame.setLayout(new GridLayout(6, 2, 10, 10));
-
+    
+        // Usando GridBagLayout para um controle melhor sobre os componentes
+        cadastroFrame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Espaçamento entre os componentes
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Preencher toda a largura do campo
+    
         JTextField txtNumeroConta = new JTextField();
         JTextField txtAgencia = new JTextField();
         JComboBox<String> comboTipoConta = new JComboBox<>(new String[]{"POUPANCA", "CORRENTE"});
@@ -139,26 +144,41 @@ public class MenuFuncionarioView extends JFrame {
         JTextField txtLimite = new JTextField();
         JTextField txtTaxaRendimento = new JTextField();
         JTextField txtIdCliente = new JTextField();
-
-        cadastroFrame.add(new JLabel("Número da Conta:"));
-        cadastroFrame.add(txtNumeroConta);
-        cadastroFrame.add(new JLabel("Agência:"));
-        cadastroFrame.add(txtAgencia);
-        cadastroFrame.add(new JLabel("Tipo de Conta:"));
-        cadastroFrame.add(comboTipoConta);
-        cadastroFrame.add(new JLabel("Saldo:"));
-        cadastroFrame.add(txtSaldo);
-        cadastroFrame.add(new JLabel("Limite:"));
-        cadastroFrame.add(txtLimite);
-        cadastroFrame.add(new JLabel("Taxa de Rendimento:"));
-        cadastroFrame.add(txtTaxaRendimento);
-        cadastroFrame.add(new JLabel("ID do Cliente:"));
-        cadastroFrame.add(txtIdCliente);
-
+    
+        // Campo para a data de vencimento
+        JTextField txtDataVencimento = new JTextField();
+    
+        // Adicionando os campos de entrada com seus rótulos
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 1; cadastroFrame.add(new JLabel("Número da Conta:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(txtNumeroConta, gbc);
+    
+        gbc.gridx = 0; gbc.gridy = 1; cadastroFrame.add(new JLabel("Agência:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(txtAgencia, gbc);
+    
+        gbc.gridx = 0; gbc.gridy = 2; cadastroFrame.add(new JLabel("Tipo de Conta:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(comboTipoConta, gbc);
+    
+        gbc.gridx = 0; gbc.gridy = 3; cadastroFrame.add(new JLabel("Saldo:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(txtSaldo, gbc);
+    
+        gbc.gridx = 0; gbc.gridy = 4; cadastroFrame.add(new JLabel("Limite:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(txtLimite, gbc);
+    
+        gbc.gridx = 0; gbc.gridy = 5; cadastroFrame.add(new JLabel("Taxa de Rendimento:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(txtTaxaRendimento, gbc);
+    
+        gbc.gridx = 0; gbc.gridy = 6; cadastroFrame.add(new JLabel("ID do Cliente:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(txtIdCliente, gbc);
+    
+        // Adicionando o campo de data de vencimento
+        gbc.gridx = 0; gbc.gridy = 7; cadastroFrame.add(new JLabel("Data de Vencimento:"), gbc);
+        gbc.gridx = 1; cadastroFrame.add(txtDataVencimento, gbc);
+    
+        // Criando o painel para os botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         JButton btnCadastrar = new JButton("Cadastrar");
         JButton btnCancelar = new JButton("Cancelar");
-
+    
         btnCadastrar.addActionListener(e -> {
             String numeroConta = txtNumeroConta.getText();
             String agencia = txtAgencia.getText();
@@ -167,26 +187,30 @@ public class MenuFuncionarioView extends JFrame {
             Double limite = txtLimite.getText().isEmpty() ? null : Double.valueOf(txtLimite.getText());
             Double taxaRendimento = txtTaxaRendimento.getText().isEmpty() ? null : Double.valueOf(txtTaxaRendimento.getText());
             int idCliente = Integer.parseInt(txtIdCliente.getText());
-
-            String mensagem = contaController.cadastrarConta(numeroConta, agencia, tipoConta, idCliente, saldo, limite, taxaRendimento, "");
+            String dataVencimento = txtDataVencimento.getText(); // Adicionando a data de vencimento
+    
+            // Passando a data de vencimento para o método de cadastro
+            String mensagem = contaController.cadastrarConta(numeroConta, agencia, tipoConta, idCliente, saldo, limite, taxaRendimento, dataVencimento);
             mostrarMensagem(mensagem);
         });
-
+    
         btnCancelar.addActionListener(e -> {
             int resposta = JOptionPane.showConfirmDialog(cadastroFrame, "Deseja realmente cancelar?", "Cancelar", JOptionPane.YES_NO_OPTION);
             if (resposta == JOptionPane.YES_OPTION) {
                 cadastroFrame.dispose();
             }
         });
-
+    
         panelBotoes.add(btnCadastrar);
         panelBotoes.add(btnCancelar);
-        cadastroFrame.add(new JLabel());
-        cadastroFrame.add(panelBotoes);
-
+    
+        // Adicionando os botões com alinhamento centralizado
+        gbc.gridx = 0; gbc.gridy = 8; gbc.gridwidth = 2; // Botões ocuparão a linha inteira
+        cadastroFrame.add(panelBotoes, gbc);
+    
         cadastroFrame.setVisible(true);
     }
-
+    
     private void abrirFormularioConsulta() {
         JFrame consultaFrame = new JFrame("Consultar");
         consultaFrame.setSize(400, 300);
