@@ -45,14 +45,27 @@ public class FuncionarioController {
         return funcionarioDAO.consultarFuncionario(idFuncionario);
     }
 
-    // Atualizar cargo do funcionário
-    public String atualizarCargoFuncionario(int idFuncionario, String novoCargo) {
+    // Método para consultar informações do funcionário pelo código
+    public String consultarFuncionarioPorCodigo(String codigoFuncionario) {
+        return funcionarioDAO.consultarFuncionarioPorCodigo(codigoFuncionario);
+    }
+
+    public String atualizarCargoFuncionario(String codigoFuncionario, String novoCargo) {
         if (novoCargo == null || novoCargo.isEmpty()) {
             return "Cargo inválido.";
         }
-        boolean sucesso = funcionarioDAO.atualizarCargo(idFuncionario, novoCargo);
+    
+        // Consulta o funcionário pelo código
+        Funcionario funcionario = funcionarioDAO.consultarFuncionarioPorCodigo(codigoFuncionario);
+    
+        if (funcionario == null) {
+            return "Funcionário não encontrado com o código informado.";
+        }
+    
+        boolean sucesso = funcionarioDAO.atualizarCargo(funcionario.getId(), novoCargo);
         return sucesso ? "Cargo atualizado com sucesso." : "Erro ao atualizar o cargo.";
     }
+    
 
     // Excluir funcionário pelo ID
     public String excluirFuncionario(int idFuncionario) {
