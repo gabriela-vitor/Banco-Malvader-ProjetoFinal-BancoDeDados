@@ -1,7 +1,6 @@
 package dao;
 
 import util.DBUtil;
-
 import java.sql.*;
 
 public class FuncionarioDAO {
@@ -27,11 +26,11 @@ public class FuncionarioDAO {
     }
 
     // Método para cadastrar um novo funcionário
-    public boolean cadastrarFuncionario(String nome, String cpf, String dataNascimento, String telefone,
-                                        String senha, String codigoFuncionario, String cargo) {
+    public int cadastrarFuncionario(String nome, String cpf, String dataNascimento, String telefone,
+                                    String senha, String cargo) {
         String usuarioSql = "INSERT INTO usuario (nome, cpf, data_nascimento, telefone, tipo_usuario, senha) " +
                             "VALUES (?, ?, ?, ?, 'FUNCIONARIO', ?)";
-
+        
         String funcionarioSql = "INSERT INTO funcionario (codigo_funcionario, cargo, id_usuario) " +
                                 "VALUES (?, ?, ?)";
 
@@ -49,16 +48,22 @@ public class FuncionarioDAO {
 
                 ResultSet rs = usuarioPs.getGeneratedKeys();
                 if (rs.next()) {
-                    int usuarioId = rs.getInt(1);
+                    int usuarioId = rs.getInt(1); // Obtém o ID do usuário recém-inserido
 
-                    try (PreparedStatement funcionarioPs = connection.prepareStatement(funcionarioSql)) {
-                        funcionarioPs.setString(1, codigoFuncionario);
+                    try (PreparedStatement funcionarioPs = connection.prepareStatement(funcionarioSql, Statement.RETURN_GENERATED_KEYS)) {
+                        funcionarioPs.setString(1, ""); // Deixa o código em branco por enquanto
                         funcionarioPs.setString(2, cargo);
                         funcionarioPs.setInt(3, usuarioId);
 
                         funcionarioPs.executeUpdate();
-                        connection.commit(); // Confirma a transação
-                        return true; // Cadastro bem-sucedido
+                        
+                        // Obtém o ID do funcionário recém-inserido
+                        rs = funcionarioPs.getGeneratedKeys();
+                        if (rs.next()) {
+                            int funcionarioId = rs.getInt(1); // Retorna o ID do funcionário recém-criado
+                            connection.commit(); // Confirma a transação
+                            return funcionarioId; // Retorna o ID do funcionário
+                        }
                     }
                 }
             } catch (SQLException e) {
@@ -67,9 +72,8 @@ public class FuncionarioDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return false;
+        return 0; // Retorna 0 se o cadastro falhar
     }
 
     // Método para consultar informações do funcionário pelo ID
@@ -93,7 +97,7 @@ public class FuncionarioDAO {
                 String cargo = rs.getString("cargo");
 
                 return String.format("Nome: %s\nCPF: %s\nData de Nascimento: %s\nTelefone: %s\nCódigo Funcionário: %s\nCargo: %s",
-        nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo);
+                                     nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,6 +135,23 @@ public class FuncionarioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    // Método para atualizar o código do funcionário
+    public boolean atualizarCodigoFuncionario(int idFuncionario, String novoCodigoFuncionario) {
+        String sql = "UPDATE funcionario SET codigo_funcionario = ? WHERE id_funcionario = ?";
+
+        try (Connection connection = DBUtil.conectar();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, novoCodigoFuncionario);  // Define o novo código do funcionário
+            ps.setInt(2, idFuncionario);  // Define o ID do funcionário a ser atualizado
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;  // Retorna true se o código foi atualizado
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;  // Retorna false em caso de erro
         }
     }
 }
