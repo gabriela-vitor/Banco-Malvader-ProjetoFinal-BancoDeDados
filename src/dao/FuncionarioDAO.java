@@ -1,6 +1,6 @@
 package dao;
 
-import util.DBUtil;
+import sql_banco__malvader.DBUtil;
 import java.sql.*;
 
 public class FuncionarioDAO {
