@@ -38,7 +38,7 @@ public class MenuClienteView extends JFrame {
         saldoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new VerificarSenhaView(MenuClienteView.this, clienteId, "Consultar Saldo"); // Verifica a senha antes de consultar o saldo
+                new SaldoView(clienteId); // Abre a tela de consulta de saldo
             }
         });
 
@@ -106,4 +106,4 @@ public class MenuClienteView extends JFrame {
     public static void main(String[] args) {
         new MenuClienteView(1); // Abre o menu para um cliente fictício
     }
-}  
+}

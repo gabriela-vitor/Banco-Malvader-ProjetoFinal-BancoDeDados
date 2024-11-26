@@ -73,4 +73,3 @@ public class SaldoView extends JFrame {
         setVisible(true);
     }
 }
-
