@@ -36,7 +36,11 @@ public class DepositoView extends JFrame {
                     if (valor <= 0) { // Verifica se o valor é inválido
                         JOptionPane.showMessageDialog(null, "Por favor, insira um valor válido!");
                     } else {
-                        clienteController.depositar(clienteId, valor); // Chama o método de depósito no controlador
+                        // Define o tipo da conta (exemplo: "corrente" ou "poupanca")
+                        String tipoConta = "corrente"; // Osu obtenha esse valor de outra fonte, se necessário
+                        
+                        // Chama o método de depósito no controlador com o tipo de conta
+                        clienteController.depositar(clienteId, valor, tipoConta);
                         JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!"); // Mensagem de sucesso
                     }
                 } catch (NumberFormatException ex) { // Captura erro de conversão de texto para número

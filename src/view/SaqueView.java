@@ -38,8 +38,11 @@ public class SaqueView extends JFrame {
                     // Converte o valor digitado no campo de texto para um número (double)
                     double valor = Double.parseDouble(valorField.getText());
                     
-                    // Chama o método de saque do controlador para verificar se o saque foi bem-sucedido
-                    if (clienteController.sacar(clienteId, valor)) {
+                    // Defina o tipo da conta (exemplo: "corrente" ou "poupanca")
+                    String tipoConta = "corrente"; // Ou obtenha esse valor de outra fonte, se necessário
+
+                    // Chama o método de saque do controlador, agora com três parâmetros
+                    if (clienteController.sacar(clienteId, valor, tipoConta)) {
                         JOptionPane.showMessageDialog(null, "Saque realizado com sucesso!"); // Mensagem de sucesso
                     } else {
                         JOptionPane.showMessageDialog(null, "Saldo insuficiente."); // Mensagem de erro
