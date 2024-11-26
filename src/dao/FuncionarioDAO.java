@@ -2,7 +2,7 @@ package dao;
 
 import sql_banco__malvader.DBUtil;
 import java.sql.*;
-
+import java.time.LocalDate;
 import model.Funcionario;
 
 public class FuncionarioDAO {
@@ -32,7 +32,7 @@ public class FuncionarioDAO {
                                     String senha, String cargo) {
         String usuarioSql = "INSERT INTO usuario (nome, cpf, data_nascimento, telefone, tipo_usuario, senha) " +
                             "VALUES (?, ?, ?, ?, 'FUNCIONARIO', ?)";
-        
+
         String funcionarioSql = "INSERT INTO funcionario (codigo_funcionario, cargo, id_usuario) " +
                                 "VALUES (?, ?, ?)";
 
@@ -42,7 +42,7 @@ public class FuncionarioDAO {
             try (PreparedStatement usuarioPs = connection.prepareStatement(usuarioSql, Statement.RETURN_GENERATED_KEYS)) {
                 usuarioPs.setString(1, nome);
                 usuarioPs.setString(2, cpf);
-                usuarioPs.setDate(3, Date.valueOf(dataNascimento));
+                usuarioPs.setDate(3, Date.valueOf(dataNascimento)); // Converte String para Date
                 usuarioPs.setString(4, telefone);
                 usuarioPs.setString(5, senha);
 
@@ -58,7 +58,7 @@ public class FuncionarioDAO {
                         funcionarioPs.setInt(3, usuarioId);
 
                         funcionarioPs.executeUpdate();
-                        
+
                         // Obtém o ID do funcionário recém-inserido
                         rs = funcionarioPs.getGeneratedKeys();
                         if (rs.next()) {
@@ -107,45 +107,46 @@ public class FuncionarioDAO {
         return "Funcionário não encontrado.";
     }
 
-    
     // Método para consultar informações do funcionário pelo código
-public Funcionario consultarFuncionarioPorCodigo(String codigoFuncionario) {
-    String sql = "SELECT u.nome, u.cpf, u.data_nascimento, u.telefone, f.codigo_funcionario, f.cargo " +
-                 "FROM funcionario f " +
-                 "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
-                 "WHERE f.codigo_funcionario = ?";
+    public Funcionario consultarFuncionarioPorCodigo(String codigoFuncionario) {
+        String sql = "SELECT u.nome, u.cpf, u.data_nascimento, u.telefone, f.codigo_funcionario, f.cargo " +
+                     "FROM funcionario f " +
+                     "INNER JOIN usuario u ON f.id_usuario = u.id_usuario " +
+                     "WHERE f.codigo_funcionario = ?";
 
-    try (Connection connection = DBUtil.conectar();
-         PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setString(1, codigoFuncionario); // Define o código do funcionário
+        try (Connection connection = DBUtil.conectar();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, codigoFuncionario); // Define o código do funcionário
 
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            // Recupera os dados do ResultSet
-            String nome = rs.getString("nome");
-            String cpf = rs.getString("cpf");
-            Date dataNascimento = rs.getDate("data_nascimento");
-            String telefone = rs.getString("telefone");
-            String codigoFuncionarioDb = rs.getString("codigo_funcionario");
-            String cargo = rs.getString("cargo");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                // Recupera os dados do ResultSet
+                String nome = rs.getString("nome");
+                String cpf = rs.getString("cpf");
+                Date dataNascimentoSql = rs.getDate("data_nascimento");
+                String telefone = rs.getString("telefone");
+                String codigoFuncionarioDb = rs.getString("codigo_funcionario");
+                String cargo = rs.getString("cargo");
 
-            // Cria o objeto Funcionario e atribui os dados
-            Funcionario funcionario = new Funcionario();
-            funcionario.setNome(nome);
-            funcionario.setCpf(cpf);
-            funcionario.setDataNascimento(dataNascimento);
-            funcionario.setTelefone(telefone);
-            funcionario.setCodigoFuncionario(codigoFuncionarioDb);
-            funcionario.setCargo(cargo);
+                // Converte a data de nascimento de Date para LocalDate
+                LocalDate dataNascimento = dataNascimentoSql.toLocalDate();
 
-            return funcionario; // Retorna o objeto Funcionario
+                // Cria o objeto Funcionario e atribui os dados
+                Funcionario funcionario = new Funcionario();
+                funcionario.setNome(nome);
+                funcionario.setCpf(cpf);
+                funcionario.setDataNascimento(dataNascimento);
+                funcionario.setTelefone(telefone);
+                funcionario.setCodigoFuncionario(codigoFuncionarioDb);
+                funcionario.setCargo(cargo);
+
+                return funcionario; // Retorna o objeto Funcionario
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return null; // Retorna null caso não encontre o funcionário
     }
-    return null; // Retorna null caso não encontre o funcionário
-}
-
 
     // Método para atualizar o cargo de um funcionário
     public boolean atualizarCargo(int idFuncionario, String novoCargo) {

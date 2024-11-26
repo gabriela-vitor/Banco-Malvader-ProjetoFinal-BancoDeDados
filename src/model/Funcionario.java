@@ -7,11 +7,20 @@ public class Funcionario extends Usuario {
     private String cargo;
     private String senha;
 
+    // Construtor parametrizado
     public Funcionario(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco, String codigoFuncionario, String cargo, String senha) {
         super(id, nome, cpf, dataNascimento, telefone, endereco);
         this.codigoFuncionario = codigoFuncionario;
         this.cargo = cargo;
         this.senha = senha;
+    }
+
+    // Construtor padrão (sem parâmetros)
+    public Funcionario() {
+        super(0, "", "", LocalDate.now(), "", null); // Inicializa a classe pai com valores padrão
+        this.codigoFuncionario = "";
+        this.cargo = "";
+        this.senha = "";
     }
 
     public String getCodigoFuncionario() {

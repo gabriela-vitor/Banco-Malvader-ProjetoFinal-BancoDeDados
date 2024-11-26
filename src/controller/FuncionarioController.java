@@ -47,8 +47,15 @@ public class FuncionarioController {
 
     // Método para consultar informações do funcionário pelo código
     public String consultarFuncionarioPorCodigo(String codigoFuncionario) {
-        return funcionarioDAO.consultarFuncionarioPorCodigo(codigoFuncionario);
+    Funcionario funcionario = funcionarioDAO.consultarFuncionarioPorCodigo(codigoFuncionario);
+    if (funcionario != null) {
+        return String.format("Nome: %s\nCPF: %s\nData de Nascimento: %s\nTelefone: %s\nCódigo Funcionário: %s\nCargo: %s",
+                             funcionario.getNome(), funcionario.getCpf(), funcionario.getDataNascimento(),
+                             funcionario.getTelefone(), funcionario.getCodigoFuncionario(), funcionario.getCargo());
     }
+    return "Funcionário não encontrado.";
+    }
+
 
     public String atualizarCargoFuncionario(String codigoFuncionario, String novoCargo) {
         if (novoCargo == null || novoCargo.isEmpty()) {
