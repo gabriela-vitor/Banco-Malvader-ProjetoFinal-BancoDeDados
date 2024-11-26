@@ -1,11 +1,14 @@
 package model;
 
-public class ContaPoupanca extends Conta{
+public class ContaPoupanca extends Conta {
 
     private double taxaRendimento;
 
-    public ContaPoupanca(String numeroConta, double saldoInicial, String agencia, Cliente cliente , double taxaRendimento) {
+    public ContaPoupanca(String numeroConta, double saldoInicial, String agencia, Cliente cliente, double taxaRendimento) {
         super(numeroConta, saldoInicial, agencia, cliente);
+        if (taxaRendimento < 0) {
+            throw new IllegalArgumentException("Taxa de rendimento deve ser maior ou igual a zero.");
+        }
         this.taxaRendimento = taxaRendimento;
     }
 
@@ -17,6 +20,8 @@ public class ContaPoupanca extends Conta{
     public void depositar(double valor) {
         if (valor > 0) {
             setSaldo(consultarSaldo() + valor);
+        } else {
+            throw new IllegalArgumentException("O valor para depósito deve ser maior que zero.");
         }
     }
 
@@ -34,22 +39,9 @@ public class ContaPoupanca extends Conta{
     }
 
     public void setTaxaRendimento(double taxaRendimento) {
+        if (taxaRendimento < 0) {
+            throw new IllegalArgumentException("Taxa de rendimento deve ser maior ou igual a zero.");
+        }
         this.taxaRendimento = taxaRendimento;
     }
 }
-
-//APENAS EXEMPLOS PARA TESTES
-
-/*package model; 
-public class ContaPoupanca { 
-    private double saldo; 
-    
-    public ContaPoupanca() { 
-        this.saldo = 500.00;} 
-        
-        public double getSaldo() { 
-            return saldo; } 
-            
-    }*/
-
-
