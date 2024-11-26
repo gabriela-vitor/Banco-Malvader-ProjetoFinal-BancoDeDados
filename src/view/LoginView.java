@@ -8,13 +8,14 @@ import java.awt.event.ActionListener;
 // Classe principal para a interface gráfica de menu cliente
 public class LoginView extends JFrame {
 
-    private final String senhaFuncionario = ""; // Senha de exemplo para funcionário
-    private final String usuarioCliente = ""; // Usuário de exemplo para cliente
-    private final String senhaCliente = ""; // Senha de exemplo para cliente
+    private final String senhaFuncionario = "func123";
+    private final String usuarioFuncionario = "funcionario"; // Usuário de exemplo para funcionário
+    private final String usuarioCliente = "cliente"; // Usuário de exemplo para cliente
+    private final String senhaCliente = "cli123"; // Senha de exemplo para cliente
 
-    // Construtor da tela do MenuClienteView
+    // Construtor da tela do Login
     public LoginView() {
-        setTitle("Menu Cliente"); // Define o título da janela
+        setTitle("Login - Selecione o tipo de acesso");
         setSize(400, 250); // Define o tamanho da janela
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao fechar a janela
         setLocationRelativeTo(null); // Centraliza a janela
@@ -90,13 +91,18 @@ public class LoginView extends JFrame {
                 if (usuario.isEmpty() || senha.length == 0) {
                     JOptionPane.showMessageDialog(loginFrame, "Por favor, preencha todos os campos.");
                 } else {
-                    JOptionPane.showMessageDialog(loginFrame, "Login realizado com sucesso!");
-                    // A lógica de autenticação e redirecionamento para o menu pode ser inserida aqui
-                    loginFrame.dispose(); // Fecha a janela de login
-                    if (tipoAcesso.equals("Cliente")) {
+                    // Lógica para autenticação de login de cliente ou funcionário
+                    if (tipoAcesso.equals("Funcionário") && usuario.equals(usuarioFuncionario) && new String(senha).equals(senhaFuncionario)) {
+                        JOptionPane.showMessageDialog(loginFrame, "Login de Funcionário realizado com sucesso!");
+                        loginFrame.dispose(); // Fecha a janela de login
+                        new MenuFuncionarioView(); // Abre o menu de funcionário
+                    } else if (tipoAcesso.equals("Cliente") && usuario.equals(usuarioCliente) && new String(senha).equals(senhaCliente)) {
+                        JOptionPane.showMessageDialog(loginFrame, "Login de Cliente realizado com sucesso!");
+                        loginFrame.dispose(); // Fecha a janela de login
                         new MenuClienteView(); // Abre o menu do cliente
+                    } else {
+                        JOptionPane.showMessageDialog(loginFrame, "Usuário ou senha incorretos.");
                     }
-                    // Adicione a lógica para "Funcionário" se necessário
                 }
             }
         });
