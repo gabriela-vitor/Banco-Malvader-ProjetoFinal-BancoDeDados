@@ -2,9 +2,6 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import model.Funcionario;
-import controller.FuncionarioController;
-import dao.FuncionarioDAO;
 
 public class FuncionarioView extends JFrame {
 
@@ -32,7 +29,7 @@ public class FuncionarioView extends JFrame {
         btnExcluir.addActionListener(e -> JOptionPane.showMessageDialog(this, "Excluir funcionário!"));
         btnVoltar.addActionListener(e -> {
             dispose(); // Fecha a tela atual
-            SwingUtilities.invokeLater(MenuFuncionarioView::new); // Retorna ao menu principal
+            new MenuFuncionarioView(); // Volta para o menu principal de funcionário
         });
 
         // Adiciona os botões à tela

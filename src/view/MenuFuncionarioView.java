@@ -1,73 +1,45 @@
 package view;
 
-import dao.FuncionarioDAO;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class MenuFuncionarioView extends JFrame {
-    private final FuncionarioDAO funcionarioDAO;
 
-    private JTextField txtCodigoFuncionario;
-    private JPasswordField txtSenha;
-
-    public MenuFuncionarioView() {
-        funcionarioDAO = new FuncionarioDAO();
+    public MenuFuncionarioView() { 
         initComponents();
     }
 
     private void initComponents() {
-        setTitle("Menu de Funcionários");
+        setTitle("Funcionário - Opções");
         setSize(600, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
-
-        // Painel Principal
-        JPanel mainPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-
-        // Campos de autenticação
-        mainPanel.add(new JLabel("Código do Funcionário:"));
-        txtCodigoFuncionario = new JTextField();
-        mainPanel.add(txtCodigoFuncionario);
-
-        mainPanel.add(new JLabel("Senha:"));
-        txtSenha = new JPasswordField();
-        mainPanel.add(txtSenha);
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         // Botões
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        JButton btnAutenticar = new JButton("Autenticar");
-        btnAutenticar.addActionListener(e -> autenticarFuncionario());
-        buttonPanel.add(btnAutenticar);
+        JButton btnCadastrar = new JButton("Cadastrar");
+        JButton btnConsultar = new JButton("Consultar");
+        JButton btnAtualizar = new JButton("Atualizar Cargo");
+        JButton btnExcluir = new JButton("Excluir");
+        JButton btnVoltar = new JButton("Voltar ao Menu");
 
-        JButton btnVoltar = new JButton("Voltar");
-        btnVoltar.addActionListener(e -> voltarParaLogin());
-        buttonPanel.add(btnVoltar);
+        btnCadastrar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Cadastrar funcionário!"));
+        btnConsultar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Consultar funcionário!"));
+        btnAtualizar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Atualizar cargo!"));
+        btnExcluir.addActionListener(e -> JOptionPane.showMessageDialog(this, "Excluir funcionário!"));
+        btnVoltar.addActionListener(e -> {
+            dispose(); // Fecha a tela atual
+            new LoginView(); // Volta para a tela principal de login
+        });
 
-        // Adiciona componentes à tela
-        add(mainPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        // Adiciona os botões à tela
+        add(btnCadastrar);
+        add(btnConsultar);
+        add(btnAtualizar);
+        add(btnExcluir);
+        add(btnVoltar);
 
         setVisible(true);
-    }
-
-    private void autenticarFuncionario() {
-        String codigo = txtCodigoFuncionario.getText();
-        String senha = new String(txtSenha.getPassword());
-
-        if (funcionarioDAO.autenticar(codigo, senha)) {
-            JOptionPane.showMessageDialog(this, "Autenticação bem-sucedida!");
-            SwingUtilities.invokeLater(FuncionarioView::new); // Abre a próxima tela
-            dispose(); // Fecha a tela atual
-        } else {
-            JOptionPane.showMessageDialog(this, "Falha na autenticação. Verifique o código e a senha.");
-        }
-    }
-
-    private void voltarParaLogin() {
-        dispose(); // Fecha a tela atual
-        SwingUtilities.invokeLater(LoginView::new); // Retorna ao menu principal
     }
 
     public static void main(String[] args) {
