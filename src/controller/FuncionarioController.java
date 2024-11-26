@@ -30,7 +30,7 @@ public class FuncionarioController {
         return "Erro ao cadastrar o funcionário.";
     }
 
-    public String consultarFuncionarioPorCodigo(String codigoFuncionario) {
+    public String consultarFuncionario(String codigoFuncionario) {
         Funcionario funcionario = funcionarioDAO.consultarFuncionarioPorCodigo(codigoFuncionario);
         if (funcionario != null) {
             return String.format("Nome: %s\nCPF: %s\nData de Nascimento: %s\nTelefone: %s\nCódigo Funcionário: %s\nCargo: %s",
