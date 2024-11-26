@@ -26,9 +26,15 @@ public class ContaDAO {
         
         // Consulta SQL para buscar saldo dependendo do tipo de conta
         if (tipoConta.equals("corrente")) {
-            sql = "SELECT saldo FROM conta_corrente WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+            sql = "SELECT cc.saldo " +
+                    "FROM conta_corrente cc" +
+                    "JOIN conta c ON cc.id_conta = c.id_conta" +
+                    "WHERE c.id_cliente = ?";
         } else if (tipoConta.equals("poupanca")) {
-            sql = "SELECT saldo FROM conta_poupanca WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+            sql = "SELECT cp.saldo " +
+                    "FROM conta_poupanca cp" +
+                    "JOIN conta c ON cp.id_conta = c.id_conta" +
+                    "WHERE c.id_cliente = ?";
         }
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -48,9 +54,15 @@ public class ContaDAO {
         String sql = "";
         
         if (tipoConta.equals("corrente")) {
-            sql = "UPDATE conta_corrente SET saldo = saldo + ? WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+            sql = "UPDATE conta_corrente cc" +
+                    "JOIN conta c ON cc.id_conta = c.id_conta" +
+                    "SET cc.saldo = cc.saldo + ?" +
+                    "WHERE c.id_cliente = ?";
         } else if (tipoConta.equals("poupanca")) {
-            sql = "UPDATE conta_poupanca SET saldo = saldo + ? WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+            sql = "UPDATE conta_poupanca cp" +
+                    "JOIN conta c ON cp.id_conta = c.id_conta" +
+                    "SET cp.saldo = cp.saldo + ?" +
+                    "WHERE c.id_cliente = ?";
         }
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -69,9 +81,15 @@ public class ContaDAO {
             String sql = "";
             
             if (tipoConta.equals("corrente")) {
-                sql = "UPDATE conta_corrente SET saldo = saldo - ? WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+                sql = "UPDATE conta_corrente cc" +
+                        "JOIN conta c ON cc.id_conta = c.id_conta" +
+                        "SET cc.saldo = cc.saldo - ?" +
+                        "WHERE c.id_cliente = ?";
             } else if (tipoConta.equals("poupanca")) {
-                sql = "UPDATE conta_poupanca SET saldo = saldo - ? WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+                sql = "UPDATE conta_poupanca cp" +
+                        "JOIN conta c ON cp.id_conta = c.id_conta" +
+                        "SET cp.saldo = cp.saldo - ?" +
+                        "WHERE c.id_cliente = ?";
             }
 
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -90,7 +108,10 @@ public class ContaDAO {
     // Método para consultar o id da conta corrente de um cliente
     public int consultarIdContaCorrente(int clienteId) {
         int idConta = 0;
-        String sql = "SELECT id_conta FROM conta_corrente WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+        String sql = "SELECT cc.id_conta" +
+                "FROM conta_corrente cc" +
+                "JOIN conta c ON cc.id_conta = c.id_conta" +
+                "WHERE c.id_cliente = ?";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, clienteId);
@@ -107,7 +128,10 @@ public class ContaDAO {
     // Método para consultar o id da conta poupança de um cliente
     public int consultarIdContaPoupanca(int clienteId) {
         int idConta = 0;
-        String sql = "SELECT id_conta FROM conta_poupanca WHERE id_conta IN (SELECT id_conta FROM conta WHERE id_cliente = ?)";
+        String sql = "SELECT cp.id_conta" +
+                "FROM conta_poupanca cp" +
+                "JOIN conta c ON cp.id_conta = c.id_conta" +
+                "WHERE c.id_cliente = ?";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, clienteId);

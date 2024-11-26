@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente extends Usuario {
-    private String senha;
     private double saldo;
     private double limite;
     private List<String> extrato; 
@@ -19,8 +18,7 @@ public class Cliente extends Usuario {
     private Endereco endereco;
 
     public Cliente(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco, String senha, double limite) {
-        super(id, nome, cpf, dataNascimento, telefone, endereco);//chama o construtor da classe Usuario
-        this.senha = senha;
+        super(id, nome, cpf, dataNascimento, telefone, endereco , senha);//chama o construtor da classe Usuario
         this.saldo = 0.0;//inicializa o saldo com zero
         this.limite = limite;
         this.extrato = new ArrayList<>();//inicializa a lista de extrato

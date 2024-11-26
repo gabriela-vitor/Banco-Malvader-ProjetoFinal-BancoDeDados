@@ -3,7 +3,7 @@ package controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import util.DBUtil;
+import sql_banco__malvader.DBUtil;
 
 public class ContaController {
 

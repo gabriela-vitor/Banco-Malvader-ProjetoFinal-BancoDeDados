@@ -197,4 +197,15 @@ public class FuncionarioDAO {
         }
         return false;
     }
+
+    public boolean verificarFuncionarioPorUsuario(int idUsuario) throws SQLException {
+        String query = "SELECT 1 FROM funcionario WHERE id_usuario = ?";
+
+        try (Connection connection = DBUtil.conectar();
+                PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Retorna true se o funcionário for encontrado
+        }
+    }
 }

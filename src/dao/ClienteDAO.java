@@ -13,7 +13,7 @@ public class ClienteDAO {
 
     // Método para autenticar o cliente pelo usuário e senha
     public boolean autenticar(String usuario, String senha) {
-        String sql = "SELECT id FROM clientes WHERE usuario = ? AND senha = ?";
+        String sql = "SELECT id_cliente FROM cliente WHERE cpf = ? AND senha = ?";
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, usuario);  // Define o nome de usuário na consulta
@@ -31,7 +31,7 @@ public class ClienteDAO {
     // Método para consultar o saldo de um cliente
     public double consultarSaldo(int clienteId) {
         double saldo = 0.0;
-        String sql = "SELECT saldo FROM clientes WHERE id = ?";
+        String sql = "SELECT saldo FROM conta WHERE id_cliente = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -49,7 +49,7 @@ public class ClienteDAO {
 
     // Método para depositar um valor na conta do cliente
     public void depositar(int clienteId, double valor, String tipoConta) {
-        String sql = "UPDATE contas SET saldo = saldo + ? WHERE cliente_id = ? AND tipo_conta = ?";
+        String sql = "UPDATE conta SET saldo = saldo + ? WHERE id_cliente = ? AND tipo_conta = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -76,7 +76,7 @@ public class ClienteDAO {
 
     // Método para sacar um valor da conta do cliente
     public boolean sacar(int clienteId, double valor, String tipoConta) {
-        String sql = "UPDATE contas SET saldo = saldo - ? WHERE cliente_id = ? AND tipo_conta = ? AND saldo >= ?";
+        String sql = "UPDATE conta SET saldo = saldo - ? WHERE id_cliente = ? AND tipo_conta = ? AND saldo >= ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -107,7 +107,7 @@ public class ClienteDAO {
     // Método para consultar o saldo da conta corrente de um cliente
     public double consultarSaldoContaCorrente(int clienteId, String tipoConta) {
         double saldo = 0.0;
-        String sql = "SELECT saldo FROM contas WHERE cliente_id = ? AND tipo_conta = ?";
+        String sql = "SELECT saldo FROM conta WHERE id_cliente = ? AND tipo_conta = ?";
 
         try (Connection connection = DBUtil.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -127,5 +127,16 @@ public class ClienteDAO {
     // Método para consultar o saldo da conta poupança de um cliente
     public double consultarSaldoContaPoupanca(int clienteId, String tipoConta) {
         return consultarSaldoContaCorrente(clienteId, tipoConta);  // Reutiliza o método genérico
+    }
+
+    public boolean verificarClientePorUsuario(int idUsuario) throws SQLException {
+        String query = "SELECT 1 FROM cliente WHERE id_usuario = ?";
+
+        try (Connection connection = DBUtil.conectar();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Retorna true se o cliente for encontrado
+        }
     }
 }

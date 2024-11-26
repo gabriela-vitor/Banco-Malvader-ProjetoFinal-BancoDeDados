@@ -12,15 +12,17 @@ public abstract class Usuario {
     private LocalDate dataNascimento;
     private String telefone;
     private Endereco endereco;
+    private String senha;
 
     // construtor da classe Usuario
-    public Usuario(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco) {
+    public Usuario(int id, String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco , String senha) {
         this.id = id; // inicializa o id
         this.nome = nome; // inicializa o nome
         this.cpf = cpf; // inicializa o CPF
         this.dataNascimento = dataNascimento; // inicializa a data de nascimento
         this.telefone = telefone; // inicializa o telefone
         this.endereco = endereco; // inicializa o endereço
+        this.senha = senha;
     }
 
     // getters e setters para os atributos 
@@ -42,6 +44,14 @@ public abstract class Usuario {
 
     public String getCpf() {
         return cpf;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public void setCpf(String cpf) {
